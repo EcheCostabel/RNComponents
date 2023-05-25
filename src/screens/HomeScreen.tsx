@@ -3,14 +3,12 @@ import { Text, View, FlatList } from 'react-native';
 import  Icon  from 'react-native-vector-icons/Ionicons';
 import { styles } from '../theme/appTheme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { MenuItem } from '../interfaces/appInterfaces';
+import { FlatListMenuItem } from '../components/FlatListMenuItem';
 
-interface MenuItem {
-    name: String;
-    icon: String;
-    component: String;
-}
 
-const menuItems = [
+
+const menuItems: MenuItem[] = [
     {
         name: 'Animation 101',
         icon: 'cube-outline',
@@ -29,13 +27,6 @@ export const HomeScreen = () => {
 
     const { top } = useSafeAreaInsets()
 
-    const renderMenuItem = (menuItem: MenuItem) => {
-        return (
-            <View>
-                <Text>{menuItem.name} - {menuItem.icon}</Text>
-            </View>
-        )
-    };
 
     const renderListHeader = () => {
         return (
@@ -55,17 +46,17 @@ export const HomeScreen = () => {
                 }}
             />
         )
-    }
+    };
 
   return (
     <View style={{ flex:1, ...styles.globalMargin}}>
         <FlatList 
             data={menuItems}
-            renderItem={({item}) => renderMenuItem(item)}
-            keyExtractor={(item) => item.name}
+            renderItem={({item}) => <FlatListMenuItem menuItem={item} />}
+            keyExtractor={(item) => item.name.toString()} //Le paso a string pq me da error sino
             ListHeaderComponent={renderListHeader}
             ItemSeparatorComponent={ itemSeparator}
         />
     </View>
   )
-}
+};
