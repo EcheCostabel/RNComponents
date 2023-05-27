@@ -18,7 +18,7 @@ export const SwitchScreen = () => {
             ...state,
             [field]: value
         })
-    }
+    };
     
 
   return (
