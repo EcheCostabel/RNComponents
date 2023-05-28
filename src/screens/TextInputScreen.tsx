@@ -1,23 +1,19 @@
 import React, { useState } from 'react'
-import { StyleSheet, TextInput, View, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, TextInput, View, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Text } from 'react-native'
 import { HeaderTitle } from '../components/HeaderTitle'
 import { styles } from '../theme/appTheme'
+import { CustomSwitch } from '../components/CustomSwitch';
+import { useForm } from '../hooks/useForm';
 
 
 export const TextInputScreen = () => {
 
-  const [ form, setForm ] = useState({
+  const { onChange, form, isSubscribed } = useForm({
       name: '',
       email: '',
       phone: '',
-  });
-
-  const onChange = ( value: string, field: string ) => {
-    setForm({
-      ...form,
-      [field]: value
-    })
-  }
+      isSubscribed: false
+  })
 
 
   return (
@@ -45,6 +41,14 @@ export const TextInputScreen = () => {
                     onChangeText={ (value) => onChange(value, 'email')}
                     keyboardType='email-address' 
                     />
+                    {/* EJEMPLO */}
+                    <View style={stylesScren.switchRow}>
+                        <Text style={stylesScren.switchText}>Suscribirse</Text>
+                        <CustomSwitch isOn={isSubscribed}  onChange={(value) => onChange(value, 'isSubscribed')} />
+                    </View>
+
+
+
                 <HeaderTitle title={JSON.stringify(form, null, 3)} />
                 <HeaderTitle title={JSON.stringify(form, null, 3)} />
 
@@ -54,8 +58,6 @@ export const TextInputScreen = () => {
                     onChangeText={ (value) => onChange(value, 'phone')} 
                     keyboardType='phone-pad'
                     />
-
-
                  <View style={{height: 100}}></View>
             </View>
 
@@ -74,5 +76,13 @@ const stylesScren = StyleSheet.create({
         borderRadius: 10,
         borderColor: 'rgba(0, 0, 0, 0.3)',
         marginVertical: 10
+    },
+    switchText: {
+      fontSize: 25
+    },
+    switchRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     }
 });
