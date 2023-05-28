@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { StyleSheet, TextInput, View } from 'react-native'
+import { StyleSheet, TextInput, View, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback } from 'react-native'
 import { HeaderTitle } from '../components/HeaderTitle'
 import { styles } from '../theme/appTheme'
+
 
 export const TextInputScreen = () => {
 
@@ -20,42 +21,54 @@ export const TextInputScreen = () => {
 
 
   return (
-    <View style={styles.globalMargin}>
-        <HeaderTitle title='TextInputScreen' />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView>
+        <TouchableWithoutFeedback>
+            <View style={styles.globalMargin}>
+                <HeaderTitle title='TextInputScreen' />
 
 
-        <TextInput
-            style={stylesScren.inputStyle}
-            placeholder='Ingrese su name'
-            autoCorrect={false}
-            autoCapitalize='words'
-            onChangeText={ (value) => onChange(value, 'name')} //Con esto le digo que me cambie el name
-        />
-        <TextInput
-            style={stylesScren.inputStyle}
-            placeholder='Ingrese su email'
-            autoCorrect={false}
-            autoCapitalize='none'
-            onChangeText={ (value) => onChange(value, 'email')}
-            keyboardType='email-address' 
-        />
-        <TextInput
-            style={stylesScren.inputStyle}
-            placeholder='Ingrese su phone'
-            onChangeText={ (value) => onChange(value, 'phone')} 
-            keyboardType='phone-pad'
-        />
+                <TextInput
+                    style={stylesScren.inputStyle}
+                    placeholder='Ingrese su name'
+                    autoCorrect={false}
+                    autoCapitalize='words'
+                    onChangeText={ (value) => onChange(value, 'name')} //Con esto le digo que me cambie el name
+                    />
+                <TextInput
+                    style={stylesScren.inputStyle}
+                    placeholder='Ingrese su email'
+                    autoCorrect={false}
+                    autoCapitalize='none'
+                    onChangeText={ (value) => onChange(value, 'email')}
+                    keyboardType='email-address' 
+                    />
+                <HeaderTitle title={JSON.stringify(form, null, 3)} />
+                <HeaderTitle title={JSON.stringify(form, null, 3)} />
 
-      <HeaderTitle title={JSON.stringify(form, null, 3)} />
+                <TextInput
+                    style={stylesScren.inputStyle}
+                    placeholder='Ingrese su phone'
+                    onChangeText={ (value) => onChange(value, 'phone')} 
+                    keyboardType='phone-pad'
+                    />
 
-    </View>
+
+                 <View style={{height: 100}}></View>
+            </View>
+
+        </TouchableWithoutFeedback>
+      </ScrollView>
+  </KeyboardAvoidingView>
   )
 };
 
 
 const stylesScren = StyleSheet.create({
-    inputStyle: {
-        borderWidth: 1,
+  inputStyle: {
+    borderWidth: 1,
         height: 50,
         paddingHorizontal: 10,
         borderRadius: 10,
